@@ -1,0 +1,121 @@
+﻿@model OnlineShop.Models.Order
+@using System.Net.Http
+@using OnlineShop.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor  IHttpContextAccessor
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+
+@{
+    List<Products>products= IHttpContextAccessor.HttpContext.Session.Get<List<Products>>("products");
+    if(products==null){
+        products = new List<Products>();
+    }
+}
+
+<div class="container">
+<div class="row">
+<div class="col-6">
+<form method="post" enctype="multipart/form-data" asp-action="Checkout" >
+    <div class="border p-3 mt-4">
+       <div class="row pb-2">
+            <h2 class="text-info"> Order Details</h2>
+            <hr />
+       </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+          <label asp-for="Name"></label>
+          <input type="hidden" asp-for="Id" />
+          <input asp-for="Name" class="form-control"  />
+          <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+          <label asp-for="PhoneNo"></label>
+          <input asp-for="PhoneNo" class="form-control" />
+          <span asp-validation-for="PhoneNo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+          <label asp-for="Address"></label>
+          <input asp-for="Address" class="form-control"/>
+          <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+         
+        <div class="mb-3">
+          <label asp-for="Email"></label>
+          @*<select asp-for="ProductTypeId" asp-items="ViewBag.productTypeId" class="form-control"></select>*@
+          <input asp-for="Email" class="form-control" />
+          <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+          <label asp-for="OrderDate"></label>
+          <input asp-for="OrderDate" class="form-control" readonly="readonly" />
+          @*<select asp-for="TagNameId" asp-items="ViewBag.tagNameId" class="form-control"></select>*@
+          <span asp-validation-for="OrderDate" class="text-danger"></span>
+        </div>
+        @*<a type="button" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary " >Edit</a>
+        <a asp-action="Edit" class="btn btn-primary">Edit</a>
+        <a asp-action= "Index" class="btn btn-success" >Back To List </a>*@
+    </div><br /><br />
+           <div class="form-group text-right">
+             <input type="submit" value="Click on the button to Place Order" class="btn btn-outline-success btn-lg" style="width:100%;" />
+          </div>
+     </form>
+  </div>
+
+
+    <div class="col-6 float-end p-2">
+           <table class="table table-bordered">
+               <thead>
+                   <tr>
+                       <th>Image</th>
+                       <th>Name</th>
+                       <th>Price</th>
+                       <th></th>
+                   </tr>
+               </thead>
+
+               <tbody>
+                  @foreach (var item in products)
+                  {
+                      <tr>
+                         <td>
+                             <img src="@item.Image" style="width:100px; height:150px;border-radius:5px;border:1px solid #efefef;" />
+                         </td>
+                         <td>
+                           @item.Name
+                         </td>
+                         <td>
+                            @item.Price
+                         </td>
+                         <td></td>
+                      </tr>
+                  }
+               </tbody>
+           </table>
+              <div class="text-right">
+                 <h3>
+                   Total Price: @products.Sum(c=>c.Price)
+                 </h3>
+              </div>
+      </div>
+
+</div>
+</div>
+       
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+       $(document).ready(function() {
+         $( "#OrderDate" ).datepicker();
+       });
+    </script>
+}

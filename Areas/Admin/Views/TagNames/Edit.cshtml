@@ -1,0 +1,31 @@
+﻿@model OnlineShop.Models.TagNames
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+       <div class="row pb-2">
+            <h2 class="text-info">Edit Tag Name</h2>
+            <hr />
+       </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+          <label asp-for="TagName"></label>
+          <input type="hidden" asp-for="Id" />
+          <input asp-for="TagName" class="form-control" />
+          <span asp-validation-for="TagName" class="text-danger"></span>
+        </div>
+
+         
+        <input type="submit" class="btn btn-primary " value="Update" />
+           <a asp-action= "Index" class="btn btn-success" >Back To List </a>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

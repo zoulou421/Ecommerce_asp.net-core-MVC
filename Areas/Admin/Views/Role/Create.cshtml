@@ -1,0 +1,52 @@
+﻿@{  
+     ViewData["Title"] = "Create";
+}
+
+<div class="container col-6">
+<form method="post" enctype="multipart/form-data" asp-action="Create" id="role-form" >
+    <div class="border p-3 mt-4">
+       <div class="row pb-2">
+            <h2 class="text-info">Add New Role</h2>
+            <hr />
+       </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <h3 class="text-danger">@ViewBag.messge</h3>
+        <div class="mb-3">
+          <label>Role Name</label>
+          <input id="name" value="@ViewBag.name" name="name" class="form-control" required="required"/>
+        </div>
+
+        <input type="submit" class="btn btn-primary " value="Create" />
+           <a asp-action= "Index" class="btn btn-success" >Back To List </a>
+    </div>
+
+</form>
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+    $(document).ready(function() {
+        $("#role-form").validate({
+          rules: {
+          UserName : {
+          required: true,
+      },
+
+       PasswordHash : {
+           required: true
+      }
+
+        },
+
+       messages : {
+          Username: "Enter your email",
+          PasswordHash :"Enter your password"
+      }
+
+     });
+
+     });
+       </script>
+    }

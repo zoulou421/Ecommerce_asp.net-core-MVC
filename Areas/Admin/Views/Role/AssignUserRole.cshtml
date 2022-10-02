@@ -1,0 +1,47 @@
+﻿<br />
+<br />
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Assign User Roles </h2>
+    </div>
+</div>
+<br />
+
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>
+                User  Name
+            </th>
+
+            <th>Role Name</th>
+        </tr>
+        @foreach (var item in ViewBag.UserRoles)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.RoleName</td>
+            </tr>
+
+        }
+    </table>
+
+</div>
+
+
+
+@section scripts{
+    <JavaScript
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+   <script src="text/javascript">
+       $(function(){
+         var save = '@TempData["save"]'
+         if(save!=null){
+            alertify.success(save);
+         }
+       })}
+
+   </script>
+
+}
